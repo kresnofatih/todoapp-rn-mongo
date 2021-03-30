@@ -12,20 +12,20 @@ const Splash = () => {
     });
     return (
         <View style={styles.splashcontainer}>
-            <Image
-                style={styles.splashImage}
-                source={require('../assets/icons8-koala-96.png')}
-                resizeMode="contain"
-            />
             {fontsLoaded &&
             <>
-                <Text style={[styles.splashTitle, {fontFamily: 'Ubuntu-Medium'}]}>Tudu</Text>
+                <Image
+                    style={styles.splashImage}
+                    source={require('../assets/icons8-koala-96.png')}
+                    resizeMode="contain"
+                />
+                <Text style={[styles.splashTitle, {fontFamily: 'Ubuntu-Light'}]}>Tudu</Text>
                 <Text style={[styles.splashSubtitle, {fontFamily: 'Ubuntu-Light'}]}>Stay Productive</Text>
+                <Pressable style={styles.splashButton} onPress={()=>console.log('print')}>
+                    <AntDesign name="rightcircle" size={40} color={colors.clearWhite} />
+                </Pressable>
             </>
             }
-            <Pressable style={styles.splashButton} onPress={()=>console.log('print')}>
-                <AntDesign name="rightcircle" size={40} color={colors.clearWhite} />
-            </Pressable>
         </View>
     )
 }
@@ -44,12 +44,13 @@ const styles = StyleSheet.create({
         width: 400,
     },
     splashTitle: {
-        fontSize: 35,
+        fontSize: 40,
         color: colors.clearWhite,
     },
     splashSubtitle: {
         marginTop: 5,
-        fontSize: 15,
+        fontSize: 20,
+        opacity: 0.7,
         color: colors.clearWhite,
     },
     splashButton: {
