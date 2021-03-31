@@ -9,9 +9,12 @@ import { Feather } from '@expo/vector-icons';
 import Footer from '../components/Footer';
 import Constants from 'expo-constants'
 import { authenticateUser, checkIfUsernameTaken, storeUserData } from '../actions/AuthActions';
+import { useDispatch } from 'react-redux';
+import { openScreen } from '../features/appSlice';
 
 
 const Auth = () => {
+    const dispatch = useDispatch();
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -85,6 +88,7 @@ const Auth = () => {
                     left="back"
                     right={signupStatus ? 'login': 'signup'}
                     rightAction={()=>setSignupStatus(!signupStatus)}
+                    leftAction={()=>{dispatch(openScreen({screen: 'splash'}))}}
                 />
                 <Image
                     style={styles.authImage}

@@ -1,17 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Auth from './screens/Auth';
-import Splash from './screens/Splash';
+import store from './store/store'
+import { Provider } from 'react-redux'
+import Internal from './Internal';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <Text>Open up App.js to start working on your app!</Text> */}
-      <StatusBar style="auto" />
-      {/* <Splash/> */}
-      <Auth/>
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <Internal/>
+      </View>
+    </Provider>
   );
 }
 

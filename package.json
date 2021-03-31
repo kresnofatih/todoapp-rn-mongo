@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
     "expo": "~40.0.0",
     "expo-constants": "~9.3.3",
@@ -16,7 +17,8 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "react-redux": "^7.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

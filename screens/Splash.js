@@ -1,10 +1,13 @@
 import React from 'react'
-import { Dimensions, StyleSheet, Image, Text, View, Pressable } from 'react-native'
+import { Dimensions, StyleSheet, Image, Text, View, Pressable, TouchableOpacity } from 'react-native'
 import { colors } from '../Colors'
 import { useFonts } from 'expo-font';
 import { AntDesign } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { openScreen } from '../features/appSlice'
 
 const Splash = () => {
+    const dispatch = useDispatch();
     let [fontsLoaded] = useFonts({
         'Ubuntu-Light' : require('../assets/fonts/Ubuntu-Light.ttf'),
         'Ubuntu-Medium' : require('../assets/fonts/Ubuntu-Medium.ttf'),
@@ -21,9 +24,9 @@ const Splash = () => {
                 />
                 <Text style={[styles.splashTitle, {fontFamily: 'Ubuntu-Light'}]}>Tudu</Text>
                 <Text style={[styles.splashSubtitle, {fontFamily: 'Ubuntu-Light'}]}>Stay Productive</Text>
-                <Pressable style={styles.splashButton} onPress={()=>console.log('print')}>
+                <TouchableOpacity style={styles.splashButton} onPress={()=>dispatch(openScreen({screen: 'auth'}))}>
                     <AntDesign name="rightcircle" size={40} color={colors.clearWhite} />
-                </Pressable>
+                </TouchableOpacity>
             </>
             }
         </View>
