@@ -8,6 +8,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Footer from '../components/Footer';
 import Constants from 'expo-constants'
+import Axios from 'axios'
+import { ipa } from '../Aipi';
 
 
 const Auth = () => {
@@ -15,7 +17,7 @@ const Auth = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [signupStatus, setSignupStatus] = useState(true);
-    const signupErrorMsg = true ? 'Denied: Username already taken' : ''
+    const [signupErrorMsg, setSignupErrorMsg] = useState('');
     const scrollViewRef = useRef(null);
     let [fontsLoaded] = useFonts({
         'Ubuntu-Light' : require('../assets/fonts/Ubuntu-Light.ttf'),
@@ -23,6 +25,24 @@ const Auth = () => {
         'Ubuntu-Regular' : require('../assets/fonts/Ubuntu-Regular.ttf'),
         'Ubuntu-LightItalic' : require('../assets/fonts/Ubuntu-LightItalic.ttf'),
     });
+
+    const signUpAccount = () =>{
+        if(username.length>=6 && password.length>=6){
+            Axios.post(ipa.ipl+'/signup', {
+                userName: username,
+                password: password
+            }).then((resp)=>{
+                setUsername('');
+                setPassword('');
+                setSignupErrorMsg('');
+            }).catch((err)=>{
+                console.log(err);
+            });
+        } else {
+            setSignupErrorMsg('Minimum 6 Characters for Username & password');
+        }
+    };
+
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
             'keyboardDidShow',
@@ -68,7 +88,7 @@ const Auth = () => {
                         <TextInput
                             style={[styles.usernameInput, fontsLoaded && {fontFamily: 'Ubuntu-Light'}]}
                             placeholder="Input Username Here"
-                            onChangeText={e=>setUsername(e.target.value)}
+                            onChangeText={val=>setUsername(val)}
                             value={username}
                         />
                     </View>
@@ -83,7 +103,7 @@ const Auth = () => {
                             style={[styles.usernameInput, fontsLoaded && {fontFamily: 'Ubuntu-Light'}]}
                             placeholder="Input Password Here"
                             secureTextEntry={true}
-                            onChangeText={e=>setPassword(e.target.value)}
+                            onChangeText={val=>setPassword(val)}
                             value={password}
                         />
                     </View>
@@ -94,16 +114,17 @@ const Auth = () => {
                         fontFamily: 'Ubuntu-Light',
                     }]}>{signupStatus ? 'Already have an account? Login' : "Don't have an account? Signup"}</Text>
                 </TouchableOpacity>
-                {signupErrorMsg &&
-                    <Text style={{padding: 10}}>
+                {signupErrorMsg!='' &&
+                    <View style={{padding: 10}}>
                         <Text style={[styles.hintMsg, fontsLoaded && {
                             fontFamily: 'Ubuntu-LightItalic',
                             color: 'red'
                         }]}>{signupErrorMsg}</Text>
-                    </Text>
+                    </View>
                 }
                 <Footer
-                    mid="Sign Up"
+                    mid={signupStatus ? 'Sign Up': 'Log In'}
+                    midAction={signUpAccount}
                 />
             </View>
         </ScrollView>

@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingBottom: 20,
-        paddingTop: 25,
+        paddingTop: 15,
         borderTopRightRadius: 50,
         borderTopLeftRadius: 50,
         backgroundColor: colors.darkBlue,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     },
     midButtonText:{
         color: colors.clearWhite,
-        fontSize: 25
+        fontSize: 20
     },
     homeButton: {
         flex: 0.4,

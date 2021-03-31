@@ -8,6 +8,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+Aipi.js
 
 # macOS
 .DS_Store
