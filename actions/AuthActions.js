@@ -27,3 +27,21 @@ export const checkIfUsernameTaken = (username, takenAction, notTakenAction)=>{
         }
     });
 }
+
+export const authenticateUser = (username, password, 
+    authedAction, notAuthedAction)=>{
+        Axios.get(ipa.ipl+'/authenticateUser', {
+            params: {
+                userName: username
+            }
+        }).then(resp=>{
+            if(resp.data[0].userName===username && 
+            resp.data[0].password===password){
+                // if username&password is correct
+                authedAction();
+            } else {
+                // if username&password is incorrect
+                notAuthedAction();
+            }
+        })
+    }

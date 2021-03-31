@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Footer from '../components/Footer';
 import Constants from 'expo-constants'
-import { checkIfUsernameTaken, storeUserData } from '../actions/AuthActions';
+import { authenticateUser, checkIfUsernameTaken, storeUserData } from '../actions/AuthActions';
 
 
 const Auth = () => {
@@ -16,7 +16,7 @@ const Auth = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [signupStatus, setSignupStatus] = useState(true);
-    const [signupErrorMsg, setSignupErrorMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
     const scrollViewRef = useRef(null);
 
     let [fontsLoaded] = useFonts({
@@ -30,16 +30,31 @@ const Auth = () => {
             checkIfUsernameTaken(
                 username,
                 //if taken=> setErrormsg 'taken'
-                ()=>{setSignupErrorMsg('Error: Username Already Taken!')},
+                ()=>{setErrorMsg('Error: Username Already Taken!')},
                 //if not taken=> storeData, 
                 ()=>{storeUserData(username, password, ()=>{
-                        setUsername(''); setPassword(''); setSignupErrorMsg('');
+                        setUsername(''); setPassword(''); setErrorMsg('');
                     });
                 }
             );
             //then setUp initial todos
         } else {
-            setSignupErrorMsg('Error: Username & Password Minimum 6 Characters!')
+            setErrorMsg('Error: Username & Password Minimum 6 Characters!')
+        };
+    }
+
+    const logInButtonOnPress = ()=>{
+        if(username.length>=6 && password.length>=6){
+            authenticateUser(
+                username,
+                password,
+                // if authenticated
+                ()=>{setErrorMsg('LoggedIn')},
+                // if authentication failed
+                ()=>{setErrorMsg("Login Failed: Make sure you've signed up")}
+            );
+        } else {
+            setErrorMsg('Username & Password minimum 6 Characters');
         };
     }
 
@@ -118,11 +133,11 @@ const Auth = () => {
                     <Text style={[styles.hintMsg, fontsLoaded && {
                         fontFamily: 'Ubuntu-LightItalic',
                         color: 'red'
-                    }]}>{signupErrorMsg}</Text>
+                    }]}>{errorMsg}</Text>
                 </View>
                 <Footer
                     mid={signupStatus ? 'Sign Up': 'Log In'}
-                    midAction={signUpButtonOnPress}
+                    midAction={signupStatus ? signUpButtonOnPress : logInButtonOnPress}
                 />
             </View>
         </ScrollView>
