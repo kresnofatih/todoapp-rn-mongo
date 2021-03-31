@@ -8,8 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import Footer from '../components/Footer';
 import Constants from 'expo-constants'
-import Axios from 'axios'
-import { ipa } from '../Aipi';
+import { checkIfUsernameTaken, storeUserData } from '../actions/AuthActions';
 
 
 const Auth = () => {
@@ -19,29 +18,30 @@ const Auth = () => {
     const [signupStatus, setSignupStatus] = useState(true);
     const [signupErrorMsg, setSignupErrorMsg] = useState('');
     const scrollViewRef = useRef(null);
+
     let [fontsLoaded] = useFonts({
         'Ubuntu-Light' : require('../assets/fonts/Ubuntu-Light.ttf'),
         'Ubuntu-Medium' : require('../assets/fonts/Ubuntu-Medium.ttf'),
         'Ubuntu-Regular' : require('../assets/fonts/Ubuntu-Regular.ttf'),
         'Ubuntu-LightItalic' : require('../assets/fonts/Ubuntu-LightItalic.ttf'),
     });
-
-    const signUpAccount = () =>{
+    const signUpButtonOnPress = () => {
         if(username.length>=6 && password.length>=6){
-            Axios.post(ipa.ipl+'/signup', {
-                userName: username,
-                password: password
-            }).then((resp)=>{
-                setUsername('');
-                setPassword('');
-                setSignupErrorMsg('');
-            }).catch((err)=>{
-                console.log(err);
-            });
+            checkIfUsernameTaken(
+                username,
+                //if taken=> setErrormsg 'taken'
+                ()=>{setSignupErrorMsg('Error: Username Already Taken!')},
+                //if not taken=> storeData, 
+                ()=>{storeUserData(username, password, ()=>{
+                        setUsername(''); setPassword(''); setSignupErrorMsg('');
+                    });
+                }
+            );
+            //then setUp initial todos
         } else {
-            setSignupErrorMsg('Minimum 6 Characters for Username & password');
-        }
-    };
+            setSignupErrorMsg('Error: Username & Password Minimum 6 Characters!')
+        };
+    }
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
@@ -114,17 +114,15 @@ const Auth = () => {
                         fontFamily: 'Ubuntu-Light',
                     }]}>{signupStatus ? 'Already have an account? Login' : "Don't have an account? Signup"}</Text>
                 </TouchableOpacity>
-                {signupErrorMsg!='' &&
-                    <View style={{padding: 10}}>
-                        <Text style={[styles.hintMsg, fontsLoaded && {
-                            fontFamily: 'Ubuntu-LightItalic',
-                            color: 'red'
-                        }]}>{signupErrorMsg}</Text>
-                    </View>
-                }
+                <View style={{padding: 10}}>
+                    <Text style={[styles.hintMsg, fontsLoaded && {
+                        fontFamily: 'Ubuntu-LightItalic',
+                        color: 'red'
+                    }]}>{signupErrorMsg}</Text>
+                </View>
                 <Footer
                     mid={signupStatus ? 'Sign Up': 'Log In'}
-                    midAction={signUpAccount}
+                    midAction={signUpButtonOnPress}
                 />
             </View>
         </ScrollView>
