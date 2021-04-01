@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { colors } from '../Colors'
 import { useFonts } from 'expo-font';
 
 
-const Tudu = () => {
-    const [isDone, setIsDone] = useState(false)
+const Tudu = ({tuduName, completeStatus, userName, tuduId}) => {
+    const [isDone, setIsDone] = useState(completeStatus);
     let [fontsLoaded] = useFonts({
         'Ubuntu-Light' : require('../assets/fonts/Ubuntu-Light.ttf'),
         'Ubuntu-Medium' : require('../assets/fonts/Ubuntu-Medium.ttf'),
@@ -19,10 +19,10 @@ const Tudu = () => {
                     styles.tudutasktext,
                     fontsLoaded && {fontFamily: 'Ubuntu-Light'},
                     isDone && {textDecorationLine: 'line-through'}
-                ]}>Finish the tudu app</Text>
+                ]}>{tuduName}</Text>
             </TouchableOpacity>
-            <View style={styles.tuduoption}>
-                <TouchableOpacity style={[
+            <TouchableOpacity style={styles.tuduoption}>
+                <Pressable style={[
                     styles.tuduoptionbtn,
                     isDone && {backgroundColor: colors.darkBlue}
                 ]} onPress={()=>setIsDone(!isDone)}>
@@ -30,8 +30,8 @@ const Tudu = () => {
                         styles.tuduoptiontext,
                         fontsLoaded && {fontFamily: 'Ubuntu-Light'}
                     ]}>{isDone ? 'Undo': 'Done'}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[
+                </Pressable>
+                <Pressable style={[
                     styles.tuduoptionbtn,
                     isDone && {backgroundColor: colors.darkBlue}
                 ]}>
@@ -39,8 +39,8 @@ const Tudu = () => {
                         styles.tuduoptiontext,
                         fontsLoaded && {fontFamily: 'Ubuntu-Light'}
                     ]}>Delete</Text>
-                </TouchableOpacity>
-            </View>
+                </Pressable>
+            </TouchableOpacity>
         </View>
     )
 }

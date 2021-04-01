@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions, StyleSheet, Image, Text, View, Pressable, TouchableOpacity } from 'react-native'
+import { Dimensions, StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native'
 import { colors } from '../Colors'
 import { useFonts } from 'expo-font';
 import { AntDesign } from '@expo/vector-icons';
