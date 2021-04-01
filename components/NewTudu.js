@@ -6,9 +6,13 @@ import Footer from './Footer'
 import { colors } from '../Colors'
 import { useFonts } from 'expo-font';
 import { Keyboard} from 'react-native'
+import { storeNewTudu } from '../actions/AppActions'
+import { useSelector } from 'react-redux'
+import { getCurrentUsername } from '../features/userSlice'
 
 const NewTudu = ({visible, exitModalAction}) => {
     const [newTaskname, setNewTaskname] = useState('')
+    const currentUsername = useSelector(getCurrentUsername);
     let [fontsLoaded] = useFonts({
         'Ubuntu-Light' : require('../assets/fonts/Ubuntu-Light.ttf'),
         'Ubuntu-Medium' : require('../assets/fonts/Ubuntu-Medium.ttf'),
@@ -52,6 +56,16 @@ const NewTudu = ({visible, exitModalAction}) => {
                 </View>
                 <Footer
                     mid="Create"
+                    midAction={()=>{
+                        storeNewTudu(
+                            currentUsername,
+                            newTaskname,
+                            ()=>{
+                                setNewTaskname('');
+                                exitModalAction();
+                            }
+                        );
+                    }}
                 />
             </Pressable>
         </Modal>
