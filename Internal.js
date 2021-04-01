@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { getCurrentScreen } from './features/appSlice';
 import Splash from './screens/Splash';
 import Auth from './screens/Auth';
+import Home from './screens/Home';
 
 const Internal = () => {
     const currentScreen = useSelector(getCurrentScreen);
@@ -16,6 +17,9 @@ const Internal = () => {
             }
             {currentScreen==='auth' &&
                 <Auth/>
+            }
+            {currentScreen==='home' &&
+                <Home/>
             }
         </View>
     )

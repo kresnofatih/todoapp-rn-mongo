@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const appSlice = createSlice({
     name: 'app',
     initialState: {
-        screen: 'splash'
+        screen: 'home'
     },
     reducers: {
         openScreen: (state, action)=>{

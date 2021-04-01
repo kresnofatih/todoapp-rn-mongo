@@ -35,9 +35,11 @@ const Auth = () => {
                 //if taken=> setErrormsg 'taken'
                 ()=>{setErrorMsg('Error: Username Already Taken!')},
                 //if not taken=> storeData, 
-                ()=>{storeUserData(username, password, ()=>{
+                ()=>{
+                    storeUserData(username, password, ()=>{
                         setUsername(''); setPassword(''); setErrorMsg('');
                     });
+                    setSignupStatus(false);
                 }
             );
             //then setUp initial todos
@@ -52,7 +54,7 @@ const Auth = () => {
                 username,
                 password,
                 // if authenticated
-                ()=>{setErrorMsg('LoggedIn')},
+                ()=>{dispatch(openScreen({screen: 'home'}))},
                 // if authentication failed
                 ()=>{setErrorMsg("Login Failed: Make sure you've signed up")}
             );

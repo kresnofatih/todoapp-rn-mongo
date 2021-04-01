@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     midButtonText:{
-        color: colors.clearWhite,
+        color: colors.lightBlue,
         fontSize: 20
     },
     homeButton: {
