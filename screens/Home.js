@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import { openScreen } from '../features/appSlice'
 import { useFonts } from 'expo-font';
 import { fakeData } from '../FakeData'
+import NewTudu from '../components/NewTudu'
 
 const Home = () => {
     let [fontsLoaded] = useFonts({
@@ -20,6 +21,7 @@ const Home = () => {
     const dispatch = useDispatch();
     const [homeList, setHomeList] = useState([])
     const [viewEmpty, setViewEmpty] = useState(homeList.length===0)
+    const [viewTuduModal, setViewTuduModal] = useState(false)
     useEffect(()=>{
         if(homeList.length>0){
             setViewEmpty(false);
@@ -65,7 +67,9 @@ const Home = () => {
             </ScrollView>
             <Footer
                 mid="New"
+                midAction={()=>setViewTuduModal(!viewTuduModal)}
             />
+            <NewTudu visible={viewTuduModal} exitModalAction={()=>setViewTuduModal(!viewTuduModal)}/>
         </View>
     )
 }

@@ -14,10 +14,10 @@ const Header = ({mid, left, right, leftAction, rightAction, midAction}) => {
         <View style={styles.headerButton}>
             <TouchableOpacity style={styles.sideButton} onPress={leftAction}>
                 <Text style={[styles.sideButtonText, fontsLoaded && {
-                    fontFamily: 'Ubuntu-Light'
+                    fontFamily: 'Ubuntu-Light',
                 }]}>{left}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.homeButton}>
+            <TouchableOpacity style={styles.homeButton} onPress={midAction}>
                 <Text style={[styles.midButtonText, fontsLoaded && {
                     fontFamily: 'Ubuntu-Light'
                 }]}>{mid}</Text>
