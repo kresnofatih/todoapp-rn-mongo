@@ -5,11 +5,12 @@ import Constants from 'expo-constants'
 import { colors } from '../Colors'
 import Footer from '../components/Footer'
 import Tudu from '../components/Tudu'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { openScreen } from '../features/appSlice'
 import { useFonts } from 'expo-font';
 import { fakeData } from '../FakeData'
 import NewTudu from '../components/NewTudu'
+import { getCurrentUsername } from '../features/userSlice'
 
 const Home = () => {
     let [fontsLoaded] = useFonts({
@@ -18,6 +19,7 @@ const Home = () => {
         'Ubuntu-Regular' : require('../assets/fonts/Ubuntu-Regular.ttf'),
         'Ubuntu-LightItalic' : require('../assets/fonts/Ubuntu-LightItalic.ttf'),
     });
+    const currentUsername = useSelector(getCurrentUsername);
     const dispatch = useDispatch();
     const [homeList, setHomeList] = useState([])
     const [viewEmpty, setViewEmpty] = useState(homeList.length===0)
@@ -32,7 +34,7 @@ const Home = () => {
     return (
         <View style={styles.homecontainer}>
             <Header
-                mid="Home"
+                mid='Home'
                 left="exit"
                 leftAction={()=>dispatch(openScreen({screen: 'auth'}))}
                 right="rfsh" // onPress = refresh

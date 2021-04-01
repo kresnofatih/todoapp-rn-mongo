@@ -11,7 +11,7 @@ import Constants from 'expo-constants'
 import { authenticateUser, checkIfUsernameTaken, storeUserData } from '../actions/AuthActions';
 import { useDispatch } from 'react-redux';
 import { openScreen } from '../features/appSlice';
-
+import { setUser } from '../features/userSlice'
 
 const Auth = () => {
     const dispatch = useDispatch();
@@ -54,7 +54,10 @@ const Auth = () => {
                 username,
                 password,
                 // if authenticated
-                ()=>{dispatch(openScreen({screen: 'home'}))},
+                ()=>{
+                    dispatch(setUser({username: username}))
+                    dispatch(openScreen({screen: 'home'}));
+                },
                 // if authentication failed
                 ()=>{setErrorMsg("Login Failed: Make sure you've signed up")}
             );
