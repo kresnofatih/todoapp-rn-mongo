@@ -60,6 +60,8 @@ const Home = () => {
                     tuduName={item.tuduName}
                     userName={item.userName}
                     completeStatus={item.completeStatus}
+                    tuduId={item._id}
+                    refreshAction={queryAllUsersTudus}
                     />
                 ))}
                 {viewEmpty &&

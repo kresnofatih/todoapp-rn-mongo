@@ -25,3 +25,14 @@ export const getUserTudus = (username, thenWithDataAction)=>{
         }
     });
 }
+
+export const updateTudu = (newTuduName, tuduId, thenAction)=>{
+    Axios.put(ipa.ipl+'/editTudu', {
+        newTuduName: newTuduName,
+        tuduId: tuduId
+    }).then(()=>{
+        thenAction();
+    });
+    // console.log(newTuduName, tuduId);
+    // thenAction();
+}

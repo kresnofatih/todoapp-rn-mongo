@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { Dimensions, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { colors } from '../Colors'
 import { useFonts } from 'expo-font';
+import EditTudu from './EditTudu';
 
 
-const Tudu = ({tuduName, completeStatus, userName, tuduId}) => {
+const Tudu = ({tuduName, completeStatus, userName, tuduId, refreshAction}) => {
     const [isDone, setIsDone] = useState(completeStatus);
+    const [viewEditModal, setViewEditModal] = useState(false)
     let [fontsLoaded] = useFonts({
         'Ubuntu-Light' : require('../assets/fonts/Ubuntu-Light.ttf'),
         'Ubuntu-Medium' : require('../assets/fonts/Ubuntu-Medium.ttf'),
@@ -14,7 +16,7 @@ const Tudu = ({tuduName, completeStatus, userName, tuduId}) => {
     });
     return (
         <View style={styles.tuducontainer}>
-            <TouchableOpacity style={styles.tudutask}>
+            <TouchableOpacity style={styles.tudutask} onPress={()=>setViewEditModal(true)}>
                 <Text style={[
                     styles.tudutasktext,
                     fontsLoaded && {fontFamily: 'Ubuntu-Light'},
@@ -41,6 +43,13 @@ const Tudu = ({tuduName, completeStatus, userName, tuduId}) => {
                     ]}>Delete</Text>
                 </Pressable>
             </TouchableOpacity>
+            <EditTudu
+                visible={viewEditModal}
+                exitModalAction={()=>{setViewEditModal(false)}}
+                tuduId={tuduId}
+                tuduName={tuduName}
+                refreshAction={refreshAction}
+            />
         </View>
     )
 }
