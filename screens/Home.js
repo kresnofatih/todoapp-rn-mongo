@@ -11,6 +11,7 @@ import { useFonts } from 'expo-font';
 import { fakeData } from '../FakeData'
 import NewTudu from '../components/NewTudu'
 import { getCurrentUsername } from '../features/userSlice'
+import { getUserTudus } from '../actions/AppActions'
 
 const Home = () => {
     let [fontsLoaded] = useFonts({
@@ -24,13 +25,24 @@ const Home = () => {
     const [homeList, setHomeList] = useState([])
     const [viewEmpty, setViewEmpty] = useState(homeList.length===0)
     const [viewTuduModal, setViewTuduModal] = useState(false)
+    const queryAllUsersTudus = ()=>{
+        getUserTudus(
+            currentUsername,
+            (respdata)=>{setHomeList(respdata.map(tuduitem=>tuduitem))}
+        );
+    }
+
     useEffect(()=>{
         if(homeList.length>0){
             setViewEmpty(false);
         } else {
             setViewEmpty(true);
-        }
+        };
     },[homeList])
+
+    useEffect(()=>{
+        queryAllUsersTudus();
+    }, [])
     return (
         <View style={styles.homecontainer}>
             <Header
@@ -38,12 +50,13 @@ const Home = () => {
                 left="exit"
                 leftAction={()=>dispatch(openScreen({screen: 'auth'}))}
                 right="rfsh" // onPress = refresh
+                rightAction={queryAllUsersTudus}
             />
             <ScrollView style={styles.homecontents}>
                 <View style={{display: 'flex', alignItems: 'center'}}>
                 {homeList.map(item=>(
                     <Tudu
-                    key={item.id}
+                    key={item._id}
                     tuduName={item.tuduName}
                     userName={item.userName}
                     completeStatus={item.completeStatus}
@@ -71,7 +84,11 @@ const Home = () => {
                 mid="New"
                 midAction={()=>setViewTuduModal(!viewTuduModal)}
             />
-            <NewTudu visible={viewTuduModal} exitModalAction={()=>setViewTuduModal(!viewTuduModal)}/>
+            <NewTudu
+                visible={viewTuduModal}
+                exitModalAction={()=>setViewTuduModal(!viewTuduModal)}
+                refreshAction={queryAllUsersTudus}
+            />
         </View>
     )
 }

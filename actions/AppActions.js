@@ -12,3 +12,16 @@ export const storeNewTudu = (username, tuduname, thenAction)=>{
         console.log(err);
     })
 }
+
+export const getUserTudus = (username, thenWithDataAction)=>{
+    Axios.get(ipa.ipl+'/getUserTudus', {
+        params: {
+            userName: username
+        }
+    }).then(resp=>{
+        if(resp.data.length>0){
+            const respdata = resp.data;
+            thenWithDataAction(respdata);
+        }
+    });
+}

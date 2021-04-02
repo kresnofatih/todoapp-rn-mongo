@@ -10,7 +10,7 @@ import { storeNewTudu } from '../actions/AppActions'
 import { useSelector } from 'react-redux'
 import { getCurrentUsername } from '../features/userSlice'
 
-const NewTudu = ({visible, exitModalAction}) => {
+const NewTudu = ({visible, exitModalAction, refreshAction}) => {
     const [newTaskname, setNewTaskname] = useState('')
     const currentUsername = useSelector(getCurrentUsername);
     let [fontsLoaded] = useFonts({
@@ -62,6 +62,7 @@ const NewTudu = ({visible, exitModalAction}) => {
                             newTaskname,
                             ()=>{
                                 setNewTaskname('');
+                                refreshAction();
                                 exitModalAction();
                             }
                         );
