@@ -3,10 +3,10 @@ import { Dimensions, Pressable, StyleSheet, Text, TouchableOpacity, View } from 
 import { colors } from '../Colors'
 import { useFonts } from 'expo-font';
 import EditTudu from './EditTudu';
+import { toggleTudu } from '../actions/AppActions';
 
 
-const Tudu = ({tuduName, completeStatus, userName, tuduId, refreshAction}) => {
-    const [isDone, setIsDone] = useState(completeStatus);
+const Tudu = ({tuduName, completeStatus, tuduId, refreshAction}) => {
     const [viewEditModal, setViewEditModal] = useState(false)
     let [fontsLoaded] = useFonts({
         'Ubuntu-Light' : require('../assets/fonts/Ubuntu-Light.ttf'),
@@ -20,22 +20,30 @@ const Tudu = ({tuduName, completeStatus, userName, tuduId, refreshAction}) => {
                 <Text style={[
                     styles.tudutasktext,
                     fontsLoaded && {fontFamily: 'Ubuntu-Light'},
-                    isDone && {textDecorationLine: 'line-through'}
+                    completeStatus && {textDecorationLine: 'line-through'}
                 ]}>{tuduName}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.tuduoption}>
                 <Pressable style={[
                     styles.tuduoptionbtn,
-                    isDone && {backgroundColor: colors.darkBlue}
-                ]} onPress={()=>setIsDone(!isDone)}>
+                    completeStatus && {backgroundColor: colors.darkBlue}
+                ]} onPress={()=>{
+                    toggleTudu(
+                        // update complete status
+                        !completeStatus,
+                        tuduId,
+                        // and then refreshAction
+                        ()=>{refreshAction();}
+                    )
+                }}>
                     <Text style={[
                         styles.tuduoptiontext,
                         fontsLoaded && {fontFamily: 'Ubuntu-Light'}
-                    ]}>{isDone ? 'Undo': 'Done'}</Text>
+                    ]}>{completeStatus ? 'Undo': 'Done'}</Text>
                 </Pressable>
                 <Pressable style={[
                     styles.tuduoptionbtn,
-                    isDone && {backgroundColor: colors.darkBlue}
+                    completeStatus && {backgroundColor: colors.darkBlue}
                 ]}>
                     <Text style={[
                         styles.tuduoptiontext,

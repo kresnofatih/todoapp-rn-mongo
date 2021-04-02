@@ -33,6 +33,13 @@ export const updateTudu = (newTuduName, tuduId, thenAction)=>{
     }).then(()=>{
         thenAction();
     });
-    // console.log(newTuduName, tuduId);
-    // thenAction();
+}
+
+export const toggleTudu = (newCompleteStatus, tuduId, thenAction)=>{
+    Axios.put(ipa.ipl+'/toggleCompleteTudu', {
+        newCompleteStatus: newCompleteStatus,
+        tuduId: tuduId
+    }).then(()=>{
+        thenAction();
+    });
 }
