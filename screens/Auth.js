@@ -59,7 +59,9 @@ const Auth = () => {
                     dispatch(openScreen({screen: 'home'}));
                 },
                 // if authentication failed
-                ()=>{setErrorMsg("Login Failed: Make sure you've signed up")}
+                ()=>setErrorMsg("Login Failed: Make sure you've signed up"),
+                // if username doesnt exist
+                ()=>setErrorMsg("User doesn't exist. Sign up now!")
             );
         } else {
             setErrorMsg('Username & Password minimum 6 Characters');
@@ -133,7 +135,7 @@ const Auth = () => {
                     </View>
                 </View>
                 <TouchableOpacity style={{padding: 10}}
-                onPress={()=>setSignupStatus(!signupStatus)}>
+                onPress={()=>{setSignupStatus(!signupStatus); setErrorMsg(''); setPassword(''); setUsername('');}}>
                     <Text style={[styles.hintMsg, fontsLoaded && {
                         fontFamily: 'Ubuntu-Light',
                     }]}>{signupStatus ? 'Already have an account? Login' : "Don't have an account? Signup"}</Text>
