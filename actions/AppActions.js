@@ -43,3 +43,9 @@ export const toggleTudu = (newCompleteStatus, tuduId, thenAction)=>{
         thenAction();
     });
 }
+
+export const deleteTudu = (tuduId, thenAction)=>{
+    Axios.delete(ipa.ipl+`/deleteTudu/${tuduId}`).then(()=>{
+        thenAction();
+    })
+}

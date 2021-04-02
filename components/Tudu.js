@@ -3,7 +3,7 @@ import { Dimensions, Pressable, StyleSheet, Text, TouchableOpacity, View } from 
 import { colors } from '../Colors'
 import { useFonts } from 'expo-font';
 import EditTudu from './EditTudu';
-import { toggleTudu } from '../actions/AppActions';
+import { deleteTudu, toggleTudu } from '../actions/AppActions';
 
 
 const Tudu = ({tuduName, completeStatus, tuduId, refreshAction}) => {
@@ -44,7 +44,12 @@ const Tudu = ({tuduName, completeStatus, tuduId, refreshAction}) => {
                 <Pressable style={[
                     styles.tuduoptionbtn,
                     completeStatus && {backgroundColor: colors.darkBlue}
-                ]}>
+                ]} onPress={()=>{
+                    deleteTudu(
+                        tuduId,
+                        ()=>{refreshAction();}
+                    )
+                }}>
                     <Text style={[
                         styles.tuduoptiontext,
                         fontsLoaded && {fontFamily: 'Ubuntu-Light'}

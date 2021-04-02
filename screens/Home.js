@@ -52,7 +52,7 @@ const Home = () => {
                 right="rfsh" // onPress = refresh
                 rightAction={queryAllUsersTudus}
             />
-            <ScrollView style={styles.homecontents}>
+            <ScrollView style={styles.homecontents} showsVerticalScrollIndicator={false}>
                 <View style={{display: 'flex', alignItems: 'center'}}>
                 {homeList.map(item=>(
                     <Tudu
